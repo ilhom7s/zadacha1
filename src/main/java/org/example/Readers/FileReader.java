@@ -10,11 +10,12 @@ import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 
-public class OtherFormatReader implements Reader {
+public class FileReader implements Reader {
     private final File file;
-
-    public OtherFormatReader(String path) {
+private final String symbol;
+    public FileReader(String path, String symbol) {
         this.file = new File(path);
+        this.symbol = symbol;
     }
 
     @Override
@@ -25,7 +26,7 @@ public class OtherFormatReader implements Reader {
             String line;
             while ((line = reader.readLine()) != null) {
                 if (line.isBlank()) continue;
-                result.add(line.split("#"));
+                result.add(line.split(symbol));
             }
         } catch (IOException e) {
             throw new UncheckedIOException(e);

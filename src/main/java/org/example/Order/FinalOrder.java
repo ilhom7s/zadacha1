@@ -1,5 +1,7 @@
 package org.example.Order;
 
+import org.example.Constants;
+
 public class FinalOrder {
     private final String name;
     private final int weigth;
@@ -12,7 +14,7 @@ private  final double totalAmount;
         this.price = price;
         this.weigth = weigth;
         this.name = name;
-        this.totalAmount = (weigth*price)*(1-discount);
+        this.totalAmount = solvetotalAmount(discount,price,weigth);
     }
 
     public String getName() {
@@ -35,6 +37,10 @@ private  final double totalAmount;
         return totalAmount;
     }
 
+    public  double solvetotalAmount(double discount, double price, int weigth){
+       return( (weigth*price)*(Constants.total-discount));
+
+    }
     @Override
     public String toString() {
         return "FinalOrder{" +

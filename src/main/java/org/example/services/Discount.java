@@ -8,25 +8,25 @@ import java.util.List;
 
 
 public class Discount {
-private final double startDiscount;
-private final double step;
-private final double pricePerKg;
+    private final double startDiscount;
+    private final double step;
+    private final double pricePerKg;
 
     public Discount(double startDiscount, double step, double pricePerKg) {
         this.startDiscount = startDiscount;
         this.step = step;
         this.pricePerKg = pricePerKg;
     }
-
     public List<FinalOrder> makeDiscount(List<Order> list){
         List<FinalOrder> result  = new ArrayList<>();
         double discount = startDiscount;
        for(Order order:list){
 
            result.add(new FinalOrder(discount,pricePerKg, order.getWeight(), order.getName()));
-           discount = Math.max(0,discount-step);
+           double nextDiscount = discount-step;
+           discount = Math.max(0,nextDiscount);
 
        }
-return result;
+       return result;
     }
 }
