@@ -9,9 +9,9 @@ import java.util.List;
 
 public class SortOrders {
 
-public  List<Order> sortOrders(List<OrderSource> list){
+public  List<Order> sortOrders(List<OrderSource> listOfOrders){
     List<Order> sortedList = new ArrayList<>();
-    for(OrderSource source:list){
+    for(OrderSource source:listOfOrders){
         sortedList.addAll(source.getOrders());
     }
      sortedList.sort(Comparator.comparing(Order::getDateTime));

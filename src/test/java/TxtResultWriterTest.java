@@ -23,8 +23,8 @@ class TxtResultWriterTest {
         totals.put("A", 13000.0);
         totals.put("B", 5500.0);
 
-        new TxtResultWriter(file.toString()).write(totals);
+        new TxtResultWriter(file.toString(),"-").write(totals);
 
-        assertEquals(List.of("A - 13000.0", "B - 5500.0"), Files.readAllLines(file));
+        assertEquals(List.of("A-13000.0", "B-5500.0"), Files.readAllLines(file));
     }
 }

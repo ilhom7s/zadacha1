@@ -10,7 +10,10 @@ import java.util.List;
 
 public class OrderAdapter implements OrderSource {
     private final Reader reader;
-
+    public static final int EXPECTED_PARTS = 3;
+    public static final int DATE_TIME_INDEX = 0;
+    public static final int NAME_INDEX = 1;
+    public static final int WEIGHT_INDEX = 2;
     public OrderAdapter(Reader reader) {
         this.reader = reader;
     }
@@ -19,10 +22,13 @@ public class OrderAdapter implements OrderSource {
     public List<Order> getOrders() {
         List<Order> result = new ArrayList<>();
         for (String[] parts : reader.read()) {
+            if(parts.length<EXPECTED_PARTS){
+                throw new RuntimeException("Получен массив размером меньше "+EXPECTED_PARTS);
+            }
             Order order = new Order();
-            order.setDateTime(LocalDateTime.parse(parts[0].trim()));
-            order.setName(parts[1].trim());
-            order.setWeight(Integer.parseInt(parts[2].trim()));
+            order.setDateTime(LocalDateTime.parse(parts[DATE_TIME_INDEX].trim()));
+            order.setName(parts[NAME_INDEX].trim());
+            order.setWeight(Integer.parseInt(parts[WEIGHT_INDEX].trim()));
             result.add(order);
         }
         return result;

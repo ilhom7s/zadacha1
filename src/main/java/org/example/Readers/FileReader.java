@@ -1,11 +1,8 @@
 package org.example.Readers;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.UncheckedIOException;
+import org.example.exceptions.FileExceptions;
+
+import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
@@ -28,8 +25,11 @@ private final String symbol;
                 if (line.isBlank()) continue;
                 result.add(line.split(symbol));
             }
-        } catch (IOException e) {
-            throw new UncheckedIOException(e);
+        } catch (FileNotFoundException e) {
+            throw  new FileExceptions("Файл не найден:"+file.getAbsolutePath(),e);
+        }
+        catch (IOException e){
+            throw new FileExceptions("Ошибка при чтении файла:"+file.getAbsolutePath(),e);
         }
         return result;
     }

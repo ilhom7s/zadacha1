@@ -30,7 +30,7 @@ class OrderAdapterTest {
         assertEquals("A", order.getName());
         assertEquals(2000, order.getWeight());
 
-        verify(reader, times(1)).read(); // адаптер прочитал данные ровно один раз
+        verify(reader, times(1)).read();
     }
 
     @Test
