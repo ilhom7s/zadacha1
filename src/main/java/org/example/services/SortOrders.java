@@ -11,10 +11,13 @@ public class SortOrders {
 
 public  List<Order> sortOrders(List<OrderSource> listOfOrders){
     List<Order> sortedList = new ArrayList<>();
-    for(OrderSource source:listOfOrders){
+
+    for(OrderSource source : listOfOrders){
         sortedList.addAll(source.getOrders());
     }
-     sortedList.sort(Comparator.comparing(Order::getDateTime));
+
+    sortedList.sort(Comparator.comparing(Order::getDateTime));
+
     return sortedList;
 }
 

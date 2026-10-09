@@ -5,6 +5,7 @@ import org.example.exceptions.FileExceptions;
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.nio.charset.StandardCharsets;
 import java.util.Map;
 
@@ -18,14 +19,16 @@ public class TxtResultWriter implements ResultWriter {
     }
 
     @Override
-    public void write(Map<String, Double> totals) {
+    public void write(Map<String, BigDecimal> totals) {
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(fileName, StandardCharsets.UTF_8))) {
+
             for (String name : totals.keySet()) {
                 writer.write(name + symbol + totals.get(name));
                 writer.newLine();
             }
+
         } catch (IOException e) {
-            throw new FileExceptions("ошибка при записи в файл: "+fileName,e);
+            throw new FileExceptions(String.format("Ошибка при записи в файл: %s",fileName),e);
         }
     }
 }

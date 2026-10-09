@@ -22,14 +22,17 @@ public class OrderAdapter implements OrderSource {
     public List<Order> getOrders() {
         List<Order> result = new ArrayList<>();
         for (String[] parts : reader.read()) {
-            if(parts.length<EXPECTED_PARTS){
-                throw new RuntimeException("Получен массив размером меньше "+EXPECTED_PARTS);
+
+            if(parts.length < EXPECTED_PARTS){
+                throw new RuntimeException(String.format("Получен массив размером меньше %d",EXPECTED_PARTS));
             }
+
             Order order = new Order();
-            order.setDateTime(LocalDateTime.parse(parts[DATE_TIME_INDEX].trim()));
+            order.setDateTime( LocalDateTime.parse(parts[ DATE_TIME_INDEX ].trim()));
             order.setName(parts[NAME_INDEX].trim());
             order.setWeight(Integer.parseInt(parts[WEIGHT_INDEX].trim()));
             result.add(order);
+
         }
         return result;
     }

@@ -21,12 +21,12 @@ class DiscountTest {
 
     private void assertAmount(String expected, BigDecimal actual) {
         assertEquals(0, new BigDecimal(expected).compareTo(actual),
-                () -> "Ожидалось " + expected + ", получено " + actual);
+                () -> String.format("Ожидалось %s  получено %s",expected, actual));
     }
 
     @Test
     void firstOrderGetsStartDiscountNextOnesLess() {
-        Discount discount = new Discount(0.5, 0.05, new BigDecimal("10"));
+        Discount discount = new Discount(new BigDecimal("0.5"), new BigDecimal("0.05"), new BigDecimal("10"));
 
         List<FinalOrder> result = discount.makeDiscount(List.of(
                 order("A", 2000),
@@ -39,7 +39,7 @@ class DiscountTest {
 
     @Test
     void discountNeverGoesBelowZero() {
-        Discount discount = new Discount(0.1, 0.05, new BigDecimal("10"));
+        Discount discount = new Discount(new BigDecimal("0.1"), new BigDecimal("0.05"), new BigDecimal("10"));
 
         List<FinalOrder> result = discount.makeDiscount(List.of(
                 order("A", 100),
@@ -48,8 +48,8 @@ class DiscountTest {
                 order("A", 100)
         ));
 
-        assertEquals(0.0, result.get(2).getDiscount(), DELTA);
-        assertEquals(0.0, result.get(3).getDiscount(), DELTA);
+        assertEquals(BigDecimal.ZERO, result.get(2).getDiscount());
+        assertEquals(BigDecimal.ZERO, result.get(3).getDiscount());
         assertAmount("1000", result.get(3).getTotalAmount());
     }
 }

@@ -3,6 +3,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
 
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.LinkedHashMap;
@@ -19,9 +20,9 @@ class TxtResultWriterTest {
     @Test
     void writesOneLinePerCompany() throws IOException {
         Path file = tempDir.resolve("result.txt");
-        Map<String, Double> totals = new LinkedHashMap<>();
-        totals.put("A", 13000.0);
-        totals.put("B", 5500.0);
+        Map<String, BigDecimal> totals = new LinkedHashMap<>();
+        totals.put("A", new BigDecimal("13000.0"));
+        totals.put("B", new BigDecimal("5500.0"));
 
         new TxtResultWriter(file.toString(),"-").write(totals);
 

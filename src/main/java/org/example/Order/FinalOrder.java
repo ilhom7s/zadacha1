@@ -7,13 +7,13 @@ public class FinalOrder {
     private final String name;
     private final int weigth;
     private final BigDecimal price;
-    private final double discount;
-    private static final BigDecimal FULL_PRICE_RATE = BigDecimal.ONE;
-    private static final int MONEY_SCALE = 2;
+    private final BigDecimal discount;
     private final BigDecimal totalAmount;
 
-private final int CONSTANT =1;
-    public FinalOrder(double discount, BigDecimal price, int weigth, String name) {
+    private static final BigDecimal FULL_PRICE_RATE = BigDecimal.ONE;
+    private static final int MONEY_SCALE = 2;
+
+    public FinalOrder(BigDecimal discount, BigDecimal price, int weigth, String name) {
         this.discount = discount;
         this.price = price;
         this.weigth = weigth;
@@ -33,7 +33,7 @@ private final int CONSTANT =1;
         return price;
     }
 
-    public double getDiscount() {
+    public BigDecimal getDiscount() {
         return discount;
     }
 
@@ -41,13 +41,11 @@ private final int CONSTANT =1;
         return totalAmount;
     }
 
-    public BigDecimal calculateTotalAmount(double discount, BigDecimal price, int weight) {
-        BigDecimal discountRate = BigDecimal.valueOf(discount);
-        BigDecimal priceRate = FULL_PRICE_RATE.subtract(discountRate);
+    private BigDecimal calculateTotalAmount(BigDecimal discount, BigDecimal price, int weight) {
+        BigDecimal priceRate = FULL_PRICE_RATE.subtract(discount);
         BigDecimal weightValue = BigDecimal.valueOf(weight);
 
-        return price
-                .multiply(weightValue)
+        return price.multiply(weightValue)
                 .multiply(priceRate)
                 .setScale(MONEY_SCALE, RoundingMode.HALF_UP);
     }

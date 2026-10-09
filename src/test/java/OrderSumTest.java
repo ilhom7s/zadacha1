@@ -12,16 +12,17 @@ class OrderSumTest {
 
     private void assertAmount(String expected, BigDecimal actual) {
         assertEquals(0, new BigDecimal(expected).compareTo(actual),
-                () -> "Ожидалось " + expected + ", получено " + actual);
+                () -> String.format("Ожидалось %s  получено %s" ,expected, actual));
     }
 
     @Test
     void ordersOfOneCompanyAreSummed() {
         List<FinalOrder> orders = List.of(
-                new FinalOrder(0.5, new BigDecimal("10"), 2000, "A"),
-                new FinalOrder(0.45, new BigDecimal("20"), 1000, "B"),
-                new FinalOrder(0.4, new BigDecimal("30"), 500, "A")
+                new FinalOrder(new BigDecimal("0.5"), new BigDecimal("10"), 2000, "A"),  // Исправлено: Стринговый конструктор в кавычках
+                new FinalOrder(new BigDecimal("0.45"), new BigDecimal("20"), 1000, "B"), // Исправлено: double обернут в new BigDecimal("...")
+                new FinalOrder(new BigDecimal("0.4"), new BigDecimal("30"), 500, "A")   // Исправлено: double обернут в new BigDecimal("...")
         );
+
 
         Map<String, BigDecimal> totals = new OrderSum().sumByCompany(orders);
 

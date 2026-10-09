@@ -9,25 +9,27 @@ import java.util.List;
 
 
 public class Discount {
-    private final double startDiscount;
-    private final double step;
+    private final BigDecimal startDiscount;
+    private final BigDecimal step;
     private final BigDecimal pricePerKg;
-    private static final int CONSTANT_DISCOUNT = 0;
+    private static final BigDecimal CONSTANT_DISCOUNT = BigDecimal.ZERO;
 
-    public Discount(double startDiscount, double step, BigDecimal pricePerKg) {
+    public Discount(BigDecimal startDiscount, BigDecimal step, BigDecimal pricePerKg) {
         this.startDiscount = startDiscount;
         this.step = step;
         this.pricePerKg = pricePerKg;
     }
     public List<FinalOrder> makeDiscount(List<Order> orderList){
+
         List<FinalOrder> result  = new ArrayList<>();
-        double discount = startDiscount;
+        BigDecimal discount = startDiscount;
+
        for(Order order:orderList){
            result.add(new FinalOrder(discount,pricePerKg, order.getWeight(), order.getName()));
-           double nextDiscount = discount-step;
-           discount = Math.max(CONSTANT_DISCOUNT,nextDiscount);
-
+           BigDecimal nextDiscount = discount.subtract(step);
+           discount = CONSTANT_DISCOUNT.max(nextDiscount);
        }
+
        return result;
     }
 }
